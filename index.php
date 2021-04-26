@@ -6,43 +6,49 @@ $productsEncoded = json_encode($products, JSON_PRETTY_PRINT );
 
 $response = [];
 $errors = [];
+$foundItems = [];
+$returnIndexes = [];
+
 // if sats som kollar ifall show eller category finns och om inte direkt skicka allt? Sparar tid?
-
-// Mahmouds api kollar kategori först och sen antal.
-
-$reqCount = $_GET['show'] ?? count($products);
 
 if (isset($_GET['category'])) {
     $queryCat = $_GET['category'];
-    $foundItems = [];
-
+    
     foreach ($products as $key => $product) {
         if ($product['category'] == $queryCat) {
             array_push($foundItems, $product);
         }
     }
-
+    
     if (!$foundItems) {
         array_push($errors, array("Category" => "Category not found"));
     }
+} else {
+    $foundItems = $products;
 }
 
-if ($reqCount <= 0 || $reqCount > count($products) || !is_numeric($reqCount)) {
-    array_push($errors, array("Show" => "Show must be between 1 and 20"));
+if (isset($_GET['show'])) {
+    $reqCount = $_GET['show'];
+    
+    if ($reqCount <= 0 || $reqCount > count($products) || !is_numeric($reqCount)) {
+        array_push($errors, array("Show" => "Show must be between 1 and 20"));
+    } else {
+        $returnIndexes = UniqueRandomNumbersWithinRange(0, count($products)-1, $reqCount);
+    }
+} else {
+    $returnIndexes = range(0, count($products)-1);
 }
 
 if ($errors) {
-    echo "hej";
-    
     $errorsEncoded = json_encode($errors, JSON_PRETTY_PRINT );
     print_r($errorsEncoded);
+} else {
+    // todo hur göra ifall det bara finns x antal av något och man begär 20 svar?
+    foreach ($returnIndexes as $key => $index) {
+        array_push($response, $foundItems[$index]);
+    }
+    print_r($response);
 }
-
-
-/* if (isset($_GET['show'])) {
-
-} */
-
 
 function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
     $numbers = range($min, $max);
