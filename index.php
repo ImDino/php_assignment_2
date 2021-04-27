@@ -1,15 +1,22 @@
 <?php
 include_once("Products.php");
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Referrer-Policy: no-referrer");
+header("Content-Type: application/json; charset=UTF-8");
+
 $productsEncoded = json_encode($products, JSON_PRETTY_PRINT );
 // echo $productsEncoded; 
+
+// todo fråga mahmoud om vi verkligen ska returnera json med JSON_PRETTY_PRINT
+// todo - då försvinner ju syftet med JSON.
 
 $response = [];
 $errors = [];
 $foundItems = [];
 $returnIndexes = [];
-
-// if sats som kollar ifall show eller category finns och om inte direkt skicka allt? Sparar tid?
 
 if (isset($_GET['category'])) {
     $queryCat = $_GET['category'];
@@ -43,13 +50,12 @@ if (isset($_GET['show'])) {
 }
 
 if ($errors) {
-    $errorsEncoded = json_encode($errors, JSON_PRETTY_PRINT );
-    print_r($errorsEncoded);
+    echo json_encode($errors, JSON_UNESCAPED_UNICODE);
 } else {
     foreach ($returnIndexes as $key => $index) {
         array_push($response, $foundItems[$index]);
     }
-    print_r($response);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
 function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
