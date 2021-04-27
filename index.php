@@ -31,19 +31,21 @@ if (isset($_GET['show'])) {
     $reqCount = $_GET['show'];
     
     if ($reqCount <= 0 || $reqCount > count($products) || !is_numeric($reqCount)) {
-        array_push($errors, array("Show" => "Show must be between 1 and 20"));
+        array_push($errors, array("Show" => "Show must be a number between 1 and 20"));
     } else {
-        $returnIndexes = UniqueRandomNumbersWithinRange(0, count($products)-1, $reqCount);
+        if ($reqCount > count($foundItems)) {
+            $reqCount = count($foundItems);
+        }
+        $returnIndexes = UniqueRandomNumbersWithinRange(0, count($foundItems)-1, $reqCount);
     }
 } else {
-    $returnIndexes = range(0, count($products)-1);
+    $returnIndexes = range(0, count($foundItems)-1);
 }
 
 if ($errors) {
     $errorsEncoded = json_encode($errors, JSON_PRETTY_PRINT );
     print_r($errorsEncoded);
 } else {
-    // todo hur göra ifall det bara finns x antal av något och man begär 20 svar?
     foreach ($returnIndexes as $key => $index) {
         array_push($response, $foundItems[$index]);
     }
@@ -55,21 +57,5 @@ function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
     shuffle($numbers);
     return array_slice($numbers, 0, $quantity);
 }
-
-/*
-Man ska kunna ange antal produkter via en GET-Request t.ex.
-https://webacademy.se/fakestore/v2/?show=5
-Då slumpgenereras 5 produkter via API:et.
-
-• Man ska kunna ange kategori t.ex.
-https://webacademy.se/fakestore/v2/?category=jewelery
-
-• Säkerhetsoptimera API:et genom att validera data som skickas till serven!
-Visa lämpliga meddelande i JSON-format vid fel t.ex.
-https://webacademy.se/fakestore/v2/?show=100
-https://webacademy.se/fakestore/v2/?category=jew
-https://webacademy.se/fakestore/v2/?category=jew&show=100
-
-*/
 
 ?>
