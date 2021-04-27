@@ -10,51 +10,46 @@ header("Content-Type: application/json; charset=UTF-8");
 $productsEncoded = json_encode($products, JSON_PRETTY_PRINT );
 // echo $productsEncoded; 
 
-// todo fråga mahmoud om vi verkligen ska returnera json med JSON_PRETTY_PRINT
-// todo - då försvinner ju syftet med JSON.
+// todo fråga mahmoud om vi verkligen ska returnera json med JSON_PRETTY_PRINT, då försvinner ju syftet med JSON.
 
-$response = [];
 $errors = [];
-$foundItems = [];
 $returnIndexes = [];
 
-if (isset($_GET['category'])) {
-    $queryCat = $_GET['category'];
-    
+$queryCat = $_GET['category'] ?? null;
+$foundItems = $queryCat ? getCategory($queryCat, $products) : $products;
+
+$queryShow = $_GET['show'] ?? null;
+$response = ($queryShow && $queryShow < count($foundItems)) ? selectItems() : $foundItems;
+
+
+function getCategory($queryCat, $products) {
     foreach ($products as $key => $product) {
         if ($product['category'] == $queryCat) {
             array_push($foundItems, $product);
         }
     }
-    
     if (!$foundItems) {
         array_push($errors, array("Category" => "Category not found"));
-    }
-} else {
-    $foundItems = $products;
+    } else return $foundItems;
 }
 
-if (isset($_GET['show'])) {
-    $reqCount = $_GET['show'];
-    
-    if ($reqCount <= 0 || $reqCount > count($products) || !is_numeric($reqCount)) {
+function selectItems() {
+    if ($queryShow <= 0 || $queryShow > count($products) || !is_numeric($queryShow)) {
         array_push($errors, array("Show" => "Show must be a number between 1 and 20"));
     } else {
-        if ($reqCount > count($foundItems)) {
-            $reqCount = count($foundItems);
+        $returnIndexes = UniqueRandomNumbersWithinRange(0, count($foundItems)-1, $queryShow);
+        $data = [];
+
+        foreach ($returnIndexes as $key => $index) {
+            array_push($data, $foundItems[$index]);
         }
-        $returnIndexes = UniqueRandomNumbersWithinRange(0, count($foundItems)-1, $reqCount);
+        return $data;
     }
-} else {
-    $returnIndexes = range(0, count($foundItems)-1);
 }
 
 if ($errors) {
     echo json_encode($errors, JSON_UNESCAPED_UNICODE);
 } else {
-    foreach ($returnIndexes as $key => $index) {
-        array_push($response, $foundItems[$index]);
-    }
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 }
 
