@@ -7,20 +7,20 @@ class ProductList {
     private static $foundItems = [];
 
     public static function main() {
-        include_once("products.php");
-        self::$products = $products;
+        $data = file_get_contents("products.json");
+        self::$products = json_decode($data, true);
         self::$queryCat = $_GET['category'] ?? null;
         self::$queryShow = $_GET['show'] ?? null;
         $error = [];
-
+        
         try {
-            self::$foundItems = self::$queryCat ? self::getCategory($products) : $products;
+            self::$foundItems = self::$queryCat ? self::getCategory() : self::$products;
         } catch (Exception $e) {
             array_push($error, array("Category" => $e->getMessage()));
         }
         
         try {
-            $response = self::$queryShow ? self::selectItems() : self::$foundItems;
+            $response = !is_null(self::$queryShow) ? self::selectItems() : self::$foundItems;
         } catch (Exception $e) {
             array_push($error, array("Show" => $e->getMessage()));
         }
@@ -30,10 +30,10 @@ class ProductList {
         } else echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
     
-    public static function getCategory($products) {
+    public static function getCategory() {
         $data = [];
 
-        foreach ($products as $key => $product) {
+        foreach (self::$products as $key => $product) {
             if ($product['category'] == self::$queryCat) {
                 array_push($data, $product);
             }
