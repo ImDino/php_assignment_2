@@ -17,20 +17,25 @@ class ProductList {
         self::$products = $products;
         self::$queryCat = $_GET['category'] ?? null;
         self::$queryShow = $_GET['show'] ?? null;
+        $error = [];
 
         try {
             self::$foundItems = self::$queryCat ? self::getCategory($products) : $products;
         } catch (Exception $e) {
-            echo $e->getMessage();
+            array_push($error, $e->getMessage());
         }
-
+        
         try {
             $response = self::$queryShow ? self::selectItems() : self::$foundItems;
-            echo json_encode($response, JSON_UNESCAPED_UNICODE || JSON_PRETTY_PRINT);
         } catch (Exception $e) {
-            echo $e->getMessage();
+            array_push($error, $e->getMessage());
         }
+
+        if ($error) {
+            echo json_encode($error, JSON_UNESCAPED_UNICODE || JSON_PRETTY_PRINT);
+        } else echo json_encode($response, JSON_UNESCAPED_UNICODE || JSON_PRETTY_PRINT);
     }
+    
     public static function getCategory($products) {
         $data = [];
 
@@ -55,6 +60,7 @@ class ProductList {
         }
         return $data;
     }
+
     public static function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
         $numbers = range($min, $max);
         shuffle($numbers);
