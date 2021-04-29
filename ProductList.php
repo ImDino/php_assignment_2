@@ -3,18 +3,18 @@
 class ProductList {
     private static $queryCat;
     private static $queryShow;
-    private static $products = [];
+    private static $allProducts = [];
     private static $foundItems = [];
 
     public static function main() {
         $data = file_get_contents("products.json");
-        self::$products = json_decode($data, true);
+        self::$allProducts = json_decode($data, true);
         self::$queryCat = $_GET['category'] ?? null;
         self::$queryShow = $_GET['show'] ?? null;
         $error = [];
         
         try {
-            self::$foundItems = self::$queryCat ? self::getCategory() : self::$products;
+            self::$foundItems = self::$queryCat ? self::getCategory() : self::$allProducts;
         } catch (Exception $e) {
             array_push($error, array("Category" => $e->getMessage()));
         }
@@ -33,7 +33,7 @@ class ProductList {
     public static function getCategory() {
         $data = [];
 
-        foreach (self::$products as $key => $product) {
+        foreach (self::$allProducts as $key => $product) {
             if ($product['category'] == self::$queryCat) {
                 array_push($data, $product);
             }
@@ -44,7 +44,7 @@ class ProductList {
     }
     
     public static function selectItems() {
-        if (self::$queryShow <= 0 || self::$queryShow > count(self::$products) || !is_numeric(self::$queryShow))
+        if (self::$queryShow <= 0 || self::$queryShow > count(self::$allProducts) || !is_numeric(self::$queryShow))
             throw new Exception("Show must be a number between 1 and 20");
         $returnIndexes = self::UniqueRandomNumbersWithinRange(0, count(self::$foundItems)-1, self::$queryShow);
         $data = [];
