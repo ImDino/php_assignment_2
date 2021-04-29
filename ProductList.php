@@ -9,22 +9,22 @@ class ProductList {
         
         $queryCat = $_GET['category'] ?? null;
         $queryShow = $_GET['show'] ?? null;
-        $error = [];
+        $errors = [];
         
         try {
             $foundItems = $queryCat ? self::getCategory($queryCat) : self::$allProducts;
         } catch (Exception $e) {
-            array_push($error, array("Category" => $e->getMessage()));
+            array_push($errors, array("Category" => $e->getMessage()));
         }
         
         try {
             $response = !is_null($queryShow) ? self::selectItems($queryShow, $foundItems) : $foundItems;
         } catch (Exception $e) {
-            array_push($error, array("Show" => $e->getMessage()));
+            array_push($errors, array("Show" => $e->getMessage()));
         }
 
-        if ($error) {
-            echo json_encode($error, JSON_UNESCAPED_UNICODE);
+        if ($errors) {
+            echo json_encode($errors, JSON_UNESCAPED_UNICODE);
         } else echo json_encode($response, JSON_UNESCAPED_UNICODE);
     }
     
