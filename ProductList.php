@@ -18,7 +18,7 @@ class ProductList {
         }
         
         try {
-            $response = !is_null($queryShow) ? self::selectItems($queryShow, $foundItems) : $foundItems;
+            $response = !is_null($queryShow) ? self::selectRandomItems($queryShow, $foundItems) : $foundItems;
         } catch (Exception $e) {
             array_push($errors, array("Show" => $e->getMessage()));
         }
@@ -41,7 +41,7 @@ class ProductList {
         return $data;
     }
     
-    private static function selectItems($count, $items) {
+    private static function selectRandomItems($count, $items) {
         if ($count <= 0 || $count > count(self::$allProducts) || !is_numeric($count))
             throw new Exception("Show must be a number between 1 and 20");
         $returnIndexes = self::UniqueRandomNumbersWithinRange(0, count($items)-1, $count);
