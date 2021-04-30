@@ -3,6 +3,7 @@
 * Create a RESTful API that generates 20 different products.
 
 * It should resemble the following API:
+https://webacademy.se/fakestore/v2/?show=5
 
 **Product example**
 ```javascript
