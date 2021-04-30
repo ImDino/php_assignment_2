@@ -9,8 +9,8 @@ class ProductList {
         $category = $_GET['category'] ?? null;
         $limit = $_GET['limit'] ?? null;
         $errors = [];
-        
         try {
+            $foundItems = [];
             $foundItems = $category ? self::getCategory($category) : self::$allProducts;
         } catch (Exception $e) {
             array_push($errors, array("Category" => $e->getMessage()));
@@ -43,6 +43,7 @@ class ProductList {
     private static function selectRandomItems($limit, $items) {
         if ($limit <= 0 || $limit > count(self::$allProducts) || !is_numeric($limit))
             throw new Exception("Show must be a number between 1 and 20");
+        if (!$items) return;
         $returnIndexes = self::UniqueRandomNumbersWithinRange(0, count($items)-1, $limit);
         $data = [];
 
