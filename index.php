@@ -7,7 +7,8 @@ header("Referrer-Policy: no-referrer");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once("ProductList.php");
+include_once("products.php");
 
-ProductList::main();
+ProductList::main($products);
 
 ?>

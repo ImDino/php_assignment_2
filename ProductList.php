@@ -3,22 +3,21 @@
 class ProductList {
     private static $allProducts = [];
 
-    public static function main() {
-        $data = file_get_contents("products.json");
-        self::$allProducts = json_decode($data, true);
+    public static function main($data) {
+        self::$allProducts = $data;
         
-        $queryCat = $_GET['category'] ?? null;
-        $queryShow = $_GET['show'] ?? null;
+        $category = $_GET['category'] ?? null;
+        $limit = $_GET['limit'] ?? null;
         $errors = [];
         
         try {
-            $foundItems = $queryCat ? self::getCategory($queryCat) : self::$allProducts;
+            $foundItems = $category ? self::getCategory($category) : self::$allProducts;
         } catch (Exception $e) {
             array_push($errors, array("Category" => $e->getMessage()));
         }
         
         try {
-            $response = !is_null($queryShow) ? self::selectRandomItems($queryShow, $foundItems) : $foundItems;
+            $response = !is_null($limit) ? self::selectRandomItems($limit, $foundItems) : $foundItems;
         } catch (Exception $e) {
             array_push($errors, array("Show" => $e->getMessage()));
         }
@@ -41,10 +40,10 @@ class ProductList {
         return $data;
     }
     
-    private static function selectRandomItems($count, $items) {
-        if ($count <= 0 || $count > count(self::$allProducts) || !is_numeric($count))
+    private static function selectRandomItems($limit, $items) {
+        if ($limit <= 0 || $limit > count(self::$allProducts) || !is_numeric($limit))
             throw new Exception("Show must be a number between 1 and 20");
-        $returnIndexes = self::UniqueRandomNumbersWithinRange(0, count($items)-1, $count);
+        $returnIndexes = self::UniqueRandomNumbersWithinRange(0, count($items)-1, $limit);
         $data = [];
 
         foreach ($returnIndexes as $key => $index) {
