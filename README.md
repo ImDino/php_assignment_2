@@ -43,12 +43,12 @@ https://webacademy.se/fakestore/v2/?category=foo&show=100
 
 ## Result
 
-All items
-https://php-assignment-2-dino.herokuapp.com/
+* [All items](https://php-assignment-2-dino.herokuapp.com/)
+* [Specific category](https://php-assignment-2-dino.herokuapp.com/?category=headphones)
+* [Two random items](https://php-assignment-2-dino.herokuapp.com/?limit=2)
+* [Both](https://php-assignment-2-dino.herokuapp.com/?category=headphones&limit=2)
 
-Specific category
-https://php-assignment-2-dino.herokuapp.com/?category=headphones
-
-Security optimizations.
-https://php-assignment-2-dino.herokuapp.com/?category=headph
-https://php-assignment-2-dino.herokuapp.com/?category=headph&limit=0
+Security optimizations:
+* [Non existing category](https://php-assignment-2-dino.herokuapp.com/?category=headph)
+* [Invalid limit](https://php-assignment-2-dino.herokuapp.com/?limit=0)
+* [Both](https://php-assignment-2-dino.herokuapp.com/?category=headph&limit=0)
