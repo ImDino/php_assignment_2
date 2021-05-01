@@ -25,8 +25,8 @@ class ProductList {
         }
 
         if ($errors) {
-            echo json_encode($errors, JSON_UNESCAPED_UNICODE);
-        } else echo json_encode($response, JSON_UNESCAPED_UNICODE);
+            echo json_encode($errors, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        } else echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
     
     private static function get_category($category) {
