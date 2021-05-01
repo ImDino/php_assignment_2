@@ -39,3 +39,16 @@ https://webacademy.se/fakestore/v2/?category=foo&show=100
 ```
 
 * Publish your API on [Heroku](https://heroku.com/).
+
+
+## Result
+
+All items
+https://php-assignment-2-dino.herokuapp.com/
+
+Specific category
+https://php-assignment-2-dino.herokuapp.com/?category=headphones
+
+Security optimizations.
+https://php-assignment-2-dino.herokuapp.com/?category=headph
+https://php-assignment-2-dino.herokuapp.com/?category=headph&limit=0
