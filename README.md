@@ -41,7 +41,10 @@ https://webacademy.se/fakestore/v2/?category=foo&show=100
 * Publish your API on [Heroku](https://heroku.com/).
 
 
+
 ## Result
+
+*NOTE: Using JSON_PRETTY_PRINT for demonstration purposes.
 
 * [All items](https://php-assignment-2-dino.herokuapp.com/)
 * [Specific category](https://php-assignment-2-dino.herokuapp.com/?category=headphones)
