@@ -44,7 +44,7 @@ https://webacademy.se/fakestore/v2/?category=foo&show=100
 
 ## Result
 
-*NOTE: Using JSON_PRETTY_PRINT for demonstration purposes.
+*NOTE: Using JSON_PRETTY_PRINT for demonstration purposes.*
 
 * [All items](https://php-assignment-2-dino.herokuapp.com/)
 * [Specific category](https://php-assignment-2-dino.herokuapp.com/?category=headphones)
