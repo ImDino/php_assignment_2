@@ -21,7 +21,7 @@ class ProductList {
         try {
             $response = !is_null($limit) ? self::select_random_items($limit, $foundItems) : $foundItems;
         } catch (Exception $e) {
-            array_push($errors, array("Show" => $e->getMessage()));
+            array_push($errors, array("Limit" => $e->getMessage()));
         }
 
         if ($errors) {
@@ -44,7 +44,7 @@ class ProductList {
     
     private static function select_random_items($limit, $items) {
         if ($limit <= 0 || $limit > count(self::$allProducts) || !is_numeric($limit))
-            throw new Exception("Show must be a number between 1 and 20");
+            throw new Exception("Limit must be a number between 1 and 20");
         else if (!$items)
             return null;
         
