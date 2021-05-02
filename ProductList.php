@@ -14,14 +14,14 @@ class ProductList {
         try {
             $response = $category ? self::get_category($category) : self::$allProducts;
         } catch (Exception $e) {
-            array_push($errors, $e->getMessage());
+            array_push($errors, array("Category" => $e->getMessage()));
         }
 
         if (!is_null($limit)) {
             try {
                 $response = self::select_random_items($limit, $response);
             } catch (Exception $e) {
-                array_push($errors, $e->getMessage());
+                array_push($errors, array("Limit" => $e->getMessage()));
             }
         }
 
@@ -37,13 +37,13 @@ class ProductList {
             }
         }
         if (!$data)
-            throw new Exception(array("Category" => "Category not found"));
+            throw new Exception("Category not found");
         return $data;
     }
     
     private static function select_random_items($limit, $items) {
         if ($limit <= 0 || $limit > count(self::$allProducts) || !is_numeric($limit))
-            throw new Exception(array("Limit" => "Limit must be a number between 1 and 20"));
+            throw new Exception("Limit must be a number between 1 and 20");
         else if (!$items)
             return null;
         
