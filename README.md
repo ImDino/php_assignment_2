@@ -51,7 +51,10 @@ https://webacademy.se/fakestore/v2/?category=foo&show=100
 
 *NOTE: Using JSON_PRETTY_PRINT for demonstration purposes.*
 
+### V1
 * [All items](https://php-assignment-2-dino.herokuapp.com/) *'/v2' can do the same w/o queries*
+
+### V2
 * [Specific category](https://php-assignment-2-dino.herokuapp.com/v2/?category=headphones)
 * [Two random items](https://php-assignment-2-dino.herokuapp.com/v2/?limit=2)
 * [Both](https://php-assignment-2-dino.herokuapp.com/v2/?category=headphones&limit=2)
