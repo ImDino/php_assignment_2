@@ -60,6 +60,6 @@ https://webacademy.se/fakestore/v2/?category=foo&show=100
 * [Both](https://php-assignment-2-dino.herokuapp.com/v2/?category=headphones&limit=2)
 
 Security optimizations:
-* [Non existing category](https://php-assignment-2-dino.herokuapp.com/?category=headph)
-* [Invalid limit](https://php-assignment-2-dino.herokuapp.com/?limit=0)
-* [Both](https://php-assignment-2-dino.herokuapp.com/?category=headph&limit=0)
+* [Non existing category](https://php-assignment-2-dino.herokuapp.com/v2/?category=headph)
+* [Invalid limit](https://php-assignment-2-dino.herokuapp.com/v2/?limit=0)
+* [Both](https://php-assignment-2-dino.herokuapp.com/v2/?category=headph&limit=0)
