@@ -1,38 +1,37 @@
 <?php
 
 class ProductList {
-    private static $allProducts = [];
+    private static $allProducts = array();
 
     public static function main($data) {
         self::$allProducts = $data;
         
         $category = $_GET['category'] ?? null;
         $limit = $_GET['limit'] ?? null;
-        $foundItems = [];
-        $response = [];
-        $errors = [];
-
+        $response = array();
+        $errors = array();
+        
         try {
-            $foundItems = $category ? self::get_category($category) : self::$allProducts;
+            $response = $category ? self::get_category($category) : self::$allProducts;
         } catch (Exception $e) {
             array_push($errors, array("Category" => $e->getMessage()));
         }
-        
-        try {
-            $response = !is_null($limit) ? self::select_random_items($limit, $foundItems) : $foundItems;
-        } catch (Exception $e) {
-            array_push($errors, array("Limit" => $e->getMessage()));
+
+        if (!is_null($limit)) {
+            try {
+                $response = self::select_random_items($limit, $response);
+            } catch (Exception $e) {
+                array_push($errors, array("Limit" => $e->getMessage()));
+            }
         }
 
-        if ($errors) {
-            echo json_encode($errors, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        } else echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        $errors ? self::echo_json($errors) : self::echo_json($response);
     }
     
     private static function get_category($category) {
-        $data = [];
+        $data = array();
 
-        foreach (self::$allProducts as $key => $product) {
+        foreach (self::$allProducts as $product) {
             if ($product['category'] == $category) {
                 array_push($data, $product);
             }
@@ -49,9 +48,9 @@ class ProductList {
             return null;
         
         $returnIndexes = self::unique_random_numbers_within_range(0, count($items)-1, $limit);
-        $data = [];
+        $data = array();
 
-        foreach ($returnIndexes as $key => $index) {
+        foreach ($returnIndexes as $index) {
             array_push($data, $items[$index]);
         }
         return $data;
@@ -61,6 +60,10 @@ class ProductList {
         $numbers = range($min, $max);
         shuffle($numbers);
         return array_slice($numbers, 0, $quantity);
+    }
+
+    private static function echo_json($input) {
+        echo json_encode($input, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 }
 
