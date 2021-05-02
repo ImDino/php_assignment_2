@@ -21,7 +21,7 @@ https://webacademy.se/fakestore/
 
 ## Part 2
 
-*note the /v2 path.*
+*note the /v2 path. Part 1 and 2 need to be seperate for this assignment*
 
 * The user should be able to get X amount of random items...
 https://webacademy.se/fakestore/v2/?show=5
