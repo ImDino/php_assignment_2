@@ -1,9 +1,11 @@
 # PHP assignment 2
 
+## Part 1
+
 * Create a RESTful API that generates 20 different products.
 
 * It should resemble the following API:
-https://webacademy.se/fakestore/v2/?show=5
+https://webacademy.se/fakestore/
 
 **Product example**
 ```javascript
@@ -16,6 +18,8 @@ https://webacademy.se/fakestore/v2/?show=5
     "category": "men clothing"
 }
 ```
+
+## Part 2
 
 * The user should be able to get X amount of random items...
 https://webacademy.se/fakestore/v2/?show=5
@@ -41,15 +45,14 @@ https://webacademy.se/fakestore/v2/?category=foo&show=100
 * Publish your API on [Heroku](https://heroku.com/).
 
 
-
 ## Result
 
 *NOTE: Using JSON_PRETTY_PRINT for demonstration purposes.*
 
-* [All items](https://php-assignment-2-dino.herokuapp.com/)
-* [Specific category](https://php-assignment-2-dino.herokuapp.com/?category=headphones)
-* [Two random items](https://php-assignment-2-dino.herokuapp.com/?limit=2)
-* [Both](https://php-assignment-2-dino.herokuapp.com/?category=headphones&limit=2)
+* [All items](https://php-assignment-2-dino.herokuapp.com/) *'/v2' can do the same w/o queries*
+* [Specific category](https://php-assignment-2-dino.herokuapp.com/v2/?category=headphones)
+* [Two random items](https://php-assignment-2-dino.herokuapp.com/v2/?limit=2)
+* [Both](https://php-assignment-2-dino.herokuapp.com/v2/?category=headphones&limit=2)
 
 Security optimizations:
 * [Non existing category](https://php-assignment-2-dino.herokuapp.com/?category=headph)
