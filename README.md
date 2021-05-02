@@ -21,6 +21,8 @@ https://webacademy.se/fakestore/
 
 ## Part 2
 
+*note the /v2 path.*
+
 * The user should be able to get X amount of random items...
 https://webacademy.se/fakestore/v2/?show=5
 
