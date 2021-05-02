@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 header("Referrer-Policy: no-referrer");
 header("Content-Type: application/json; charset=UTF-8");
 
-include_once("../ProductList.php");
+include_once("ProductList.php");
 include_once("../data.php");
 
 ProductList::main($products);
