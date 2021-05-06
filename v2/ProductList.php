@@ -25,7 +25,7 @@ class ProductList {
             }
         }
 
-        $errors ? self::echo_json($errors) : self::echo_json($response);
+        self::echo_json($errors ? $errors : $response);
     }
     
     private static function get_category($category) {
